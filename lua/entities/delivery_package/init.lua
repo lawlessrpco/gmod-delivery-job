@@ -45,6 +45,8 @@ function ENT:StopDelivery()
     -- Reset some things and restrict the player from delivering again
     self:ResetPlayer()
 
+    -- Logging Support
+    hook.Call("Delivery:DeliveryEnded", ply, self:GetName(), self:GetReward())
     self:Remove()
 end
 

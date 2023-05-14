@@ -26,12 +26,14 @@ function ENT:Use(ply)
 
 		local current_package = ply:GetNWEntity("Delivery:PackageEntity")
 		if IsValid(current_package) then
+			hook.Call("Delivery:DeliveryEnded", ply, current_package:GetName(), current_package:GetReward())
 			SafeRemoveEntity(current_package)
 			ply:SetNWEntity("Delivery:PackageEntity", nil)
 		end
 
 		ply:SetNWInt("Delivery:Cooldown", CurTime() + DELIV.Cooldown)
 		ply:SetNWBool("Delivery:IsDelivering", false)
+
 	elseif ply:GetNWInt("Delivery:Cooldown", 0) > CurTime() then
 		DarkRP.notify(ply, NOTIFY_ERROR, 5, "I'm not giving you another package that quickly, come back in " .. math.ceil(ply:GetNWInt("Delivery:Cooldown", 0) - CurTime()) .. " seconds.")
 	else
@@ -64,6 +66,8 @@ function ENT:Use(ply)
 
 		DarkRP.notify(ply, NOTIFY_GENERIC, 5, "Deliver this package and i'll reward you nicely. (You have " .. DELIV.DeliveryGuarentee .. " seconds to complete this task)")
 		ply:SetNWBool("Delivery:IsDelivering", true)
+
+		hook.Call("Delivery:DeliveryStarted", ply)
 	end
 end
 

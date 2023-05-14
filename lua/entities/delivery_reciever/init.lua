@@ -17,6 +17,7 @@ end
 function ENT:Use(ply)
 	for k, v in pairs(ents.FindInSphere(self:GetPos(), 256)) do
 		if v:GetClass() != "delivery_package" then continue end
+		hook.Call("Delivery:DeliveryCompleted", ply, v:GetName(), v:GetReward())
 		return self:RewardPackage(v)
 	end
 

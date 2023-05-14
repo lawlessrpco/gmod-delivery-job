@@ -17,3 +17,29 @@ end
 function pMeta:IsDeliveryMan()
     return ply:getJobTable().delivery_man
 end
+
+-- Draw the delivery position
+if CLIENT then
+    hook.Add("HUDPaint", "Delivery:HUDPaint", function()
+        local ply = LocalPlayer()
+        if !ply:GetNWBool("Delivery:IsDelivering", false) == true then return end
+
+        local package = ply:GetNWEntity("Delivery:PackageEntity", nil)
+        if !IsValid(package) then return end
+
+        local deliver_to = package:GetTarget()
+        if !IsValid(deliver_to) then return end
+
+        local packagepos = package:GetPos():ToScreen()
+        local deliverpos = deliver_to:GetPos():ToScreen()
+
+        -- If it's on the screen
+        if packagepos.x >= 0 and packagepos.x <= ScrW() and packagepos.y >= 0 and packagepos.y <= ScrH() and LocalPlayer():GetPos():Distance(package:GetPos()) >= 400 then
+            draw.SimpleText("Package", UNITY.Font(ScreenScale(10)), packagepos.x, packagepos.y, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        end
+
+        if deliverpos.x >= 0 and deliverpos.x <= ScrW() and deliverpos.y >= 0 and deliverpos.y <= ScrH() and LocalPlayer():GetPos():Distance(deliver_to:GetPos()) >= 400 then
+            draw.SimpleText("Delivery Target", UNITY.Font(ScreenScale(10)), deliverpos.x, deliverpos.y, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+        end
+    end)
+end
