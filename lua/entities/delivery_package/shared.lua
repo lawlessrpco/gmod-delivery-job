@@ -4,7 +4,7 @@ ENT.Base = "base_anim"
 ENT.PrintName = "Package"
 ENT.Category = "Delivery"
 ENT.Author = "Lion"
-ENT.Spawnable = true
+ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
 
