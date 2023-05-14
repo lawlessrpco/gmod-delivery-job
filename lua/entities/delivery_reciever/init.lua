@@ -15,7 +15,16 @@ function ENT:Initialize()
 end
 
 function ENT:Use(ply)
+	for k, v in pairs(ents.FindInSphere(self:GetPos(), 256)) do
+		if v:GetClass() != "delivery_package" then continue end
+		return self:RewardPackage(v)
+	end
 
+	DarkRP.notify(ply, NOTIFY_GENERIC, 5, "Come back with a package for me :(")
+end
+
+function ENT:RewardPackage(package)
+	package:RewardDeliveryMan()
 end
 
 function ENT:OnTakeDamage()

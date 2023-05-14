@@ -1,5 +1,5 @@
 include("shared.lua")
 
-function ENT:Draw()
-    self:DrawModel() -- Draw the base model
+function ENT:DrawTranslucent()
+    self:DrawModel() -- draw the base model
 end
