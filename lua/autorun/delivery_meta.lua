@@ -20,6 +20,12 @@ end
 
 -- Draw the delivery position
 if CLIENT then
+    surface.CreateFont("Delivery:PositionNotification", {
+        font = "Arial",
+        size = ScreenScale(10),
+        weight = 500,
+    })
+    
     hook.Add("HUDPaint", "Delivery:HUDPaint", function()
         local ply = LocalPlayer()
         if !ply:GetNWBool("Delivery:IsDelivering", false) == true then return end
@@ -35,11 +41,11 @@ if CLIENT then
 
         -- If it's on the screen
         if packagepos.x >= 0 and packagepos.x <= ScrW() and packagepos.y >= 0 and packagepos.y <= ScrH() and LocalPlayer():GetPos():Distance(package:GetPos()) >= 400 then
-            draw.SimpleText("Package", UNITY.Font(ScreenScale(10)), packagepos.x, packagepos.y, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Package", "Delivery:PositionNotification", packagepos.x, packagepos.y, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
 
         if deliverpos.x >= 0 and deliverpos.x <= ScrW() and deliverpos.y >= 0 and deliverpos.y <= ScrH() and LocalPlayer():GetPos():Distance(deliver_to:GetPos()) >= 400 then
-            draw.SimpleText("Delivery Target", UNITY.Font(ScreenScale(10)), deliverpos.x, deliverpos.y, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+            draw.SimpleText("Delivery Target", "Delivery:PositionNotification", deliverpos.x, deliverpos.y, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
         end
     end)
 end
